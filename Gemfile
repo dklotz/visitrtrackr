@@ -3,6 +3,12 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0.rc1'
 
+# Since we want the old protection behavior:
+gem 'protected_attributes'
+
+# Used for geocoding
+gem "geocoder", "~> 1.1.8"
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
