@@ -4,8 +4,8 @@
   <thead>
     <tr>
       <th>Useragent</th>
-      <th>Lat</th>
-      <th>Long</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
       <th></th>
       <th></th>
       <th></th>
@@ -16,8 +16,8 @@
     <% @visits.each do |visit| %>
       <tr>
         <td><%= visit.useragent %></td>
-        <td><%= visit.lat %></td>
-        <td><%= visit.long %></td>
+        <td><%= visit.latitude %></td>
+        <td><%= visit.longitude %></td>
         <td><%= link_to 'Show', visit %></td>
         <td><%= link_to 'Edit', edit_visit_path(visit) %></td>
         <td><%= link_to 'Destroy', visit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
