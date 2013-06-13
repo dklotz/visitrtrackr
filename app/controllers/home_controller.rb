@@ -6,13 +6,29 @@ class HomeController < ApplicationController
     if request.remote_ip == '127.0.0.1'
       # Hard coded remote address
       '77.176.241.91'
+      #'173.194.69.99'
+      #''
     else
       request.remote_ip
     end
   end
   
-  def index
+  def get_location
     results = Geocoder.search(remote_ip)
-    @location = results[0] unless results.empty?
+    if results.empty?
+      location = {  :address => 'Unknown',
+                    :latitude => 0.0,
+                    :longitude => 0.0 }
+    else
+      location = {  :address => results[0].city + ", " + results[0].country_code,
+                    :latitude => results[0].latitude,
+                    :longitude => results[0].longitude }
+    end
+    return location
+  end
+  
+  def index
+    @location = get_location
+    @user_agent = request.user_agent
   end
 end

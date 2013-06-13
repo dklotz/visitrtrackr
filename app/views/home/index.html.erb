@@ -1,3 +1,15 @@
+<%= javascript_tag do %>
+	var request_loc_address = <%= @location[:address].to_json %>;
+	var request_loc_latitude = <%= @location[:latitude].to_json %>;
+	var request_loc_longitude = <%= @location[:longitude].to_json %>;
+<% end %>
+
+
 <h1>VisitrTrackr (beta)</h1>
-<p>You come from: <%= @location.city %>, <%= @location.country %>, <%= @location.latitude %>, <%= @location.longitude %></p>
+
+<p>You come from: <%= @location[:address] %>, <%= @location[:latitude] %>, <%= @location[:longitude] %></p>
+
+<p>Your user agent is: <%= @user_agent %></p>
+
 <p><%= link_to "Visits", visits_path %></p>
+
