@@ -1,29 +1,43 @@
 
 <h1>VisitrTrackr (beta)</h1>
 
+<div id="status">
+	Initializing JS...
+</div>
+
 <div id="the-result">
 </div>
-
-<div id="status">
-</div>
-
-<p><%= link_to "Visits", visits_path %></p>
 
 
 <script src="geoPosition.js" type="text/javascript" charset="utf-8"></script>
 
 <%= javascript_tag do %>
-	var rloc_address = "<%= escape_javascript @location[:address] %>";
-	var rloc_latitude = <%= @location[:latitude] %>;
-	var rloc_longitude = <%= @location[:longitude] %>;
 	var user_agent = "<%= escape_javascript @user_agent %>";
 	
-	$( "#the-result" ).html( 'You come from ' + rloc_address + ' (' + rloc_latitude + ',' + rloc_longitude + ') and your browser is: ' + user_agent );
+	function update_result(latitude, longitude) {
+		$( "#the-result" ).html( 'You come from (' + latitude + ',' + longitude + ') and your browser is: ' + user_agent );
+	}
+	
+	function use_geoloc_result(loc) {
+		$( "#status").html("Using location from GeoLocation API.");
+		update_result(loc.coords.latitude, loc.coords.longitude);
+	}
+	
+	function use_request_loc() {
+		$( "#status").html("Using server-side fallback.");
+		
+		var rloc_latitude = <%= @location[:latitude] %>;
+		var rloc_longitude = <%= @location[:longitude] %>;
+		
+		update_result(rloc_latitude, rloc_longitude);
+	}
 	
 	if (geoPosition.init()) {
 		$( "#status").html("I can haz Geo!");
+		geoPosition.getCurrentPosition(use_geoloc_result, use_request_loc);
 	} else {
-		$( "#status").html("No Geo... :-(");
+		$( "#status").html("No GeoLocation API...");
+		use_request_loc();
 	}
 <% end %>
 
