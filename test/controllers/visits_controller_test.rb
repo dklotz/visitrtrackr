@@ -18,7 +18,7 @@ class VisitsControllerTest < ActionController::TestCase
 
   test "should create visit" do
     assert_difference('Visit.count') do
-      post :create, visit: { lat: @visit.lat, long: @visit.long, useragent: @visit.useragent }
+      post :create, visit: { latitude: @visit.latitude, longitude: @visit.longitude, useragent: @visit.useragent }
     end
 
     assert_redirected_to visit_path(assigns(:visit))
@@ -35,7 +35,7 @@ class VisitsControllerTest < ActionController::TestCase
   end
 
   test "should update visit" do
-    patch :update, id: @visit, visit: { lat: @visit.lat, long: @visit.long, useragent: @visit.useragent }
+    patch :update, id: @visit, visit: { latitude: @visit.latitude, longitude: @visit.longitude, useragent: @visit.useragent }
     assert_redirected_to visit_path(assigns(:visit))
   end
 

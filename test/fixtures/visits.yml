@@ -2,10 +2,10 @@
 
 one:
   useragent: MyString
-  lat: 1.5
-  long: 1.5
+  latitude: 1.5
+  longitude: 1.5
 
 two:
   useragent: MyString
-  lat: 1.5
-  long: 1.5
+  latitude: 1.5
+  longitude: 1.5
