@@ -8,6 +8,12 @@
 <div id="the-result">
 </div>
 
+<p style="margin:0 auto;width:400px;height:320px" id="geo-wrapper">
+	Here be maps.
+</p>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPXXKA0xggy7R1XR-N1GE7D-PS47OK2ak&sensor=false">
+</script>
 
 <script src="geoPosition.js" type="text/javascript" charset="utf-8"></script>
 
@@ -16,6 +22,28 @@
 	
 	function update_result(latitude, longitude) {
 		$( "#the-result" ).html( 'You come from (' + latitude + ',' + longitude + ') and your browser is: ' + user_agent );
+		
+		//$.post("/visits.json", { visit: { useragent: user_agent, latitude: latitude, longitude: longitude } } );
+		
+		$( "#status").html("I can haz Maps?");
+		
+		google.maps.visualRefresh = true;
+		
+		var myLoc = new google.maps.LatLng(latitude, longitude);
+		
+		var mapOptions = {
+			center: myLoc,
+			zoom: 8,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		
+		var map = new google.maps.Map(document.getElementById("geo-wrapper"), mapOptions);
+		
+		var marker = new google.maps.Marker({
+			position: myLoc,
+			map: map,
+			title:"Hello World!"
+		});
 	}
 	
 	function use_geoloc_result(loc) {
@@ -35,6 +63,7 @@
 	if (geoPosition.init()) {
 		$( "#status").html("I can haz Geo!");
 		geoPosition.getCurrentPosition(use_geoloc_result, use_request_loc);
+		//$.post("/visits.json", { visit: { useragent: user_agent, latitude: 23.5, longitude: 42.3 } } );
 	} else {
 		$( "#status").html("No GeoLocation API...");
 		use_request_loc();
