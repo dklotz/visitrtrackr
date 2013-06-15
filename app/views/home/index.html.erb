@@ -15,15 +15,26 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPXXKA0xggy7R1XR-N1GE7D-PS47OK2ak&sensor=false">
 </script>
 
+<script src="jquery.cookie.js"></script>
+
 <script src="geoPosition.js" type="text/javascript" charset="utf-8"></script>
 
 <%= javascript_tag do %>
 	var user_agent = "<%= escape_javascript @user_agent %>";
 	
+	// Saves the visit in the backend and sets a cookie to prevent duplicates
+	function save_visit(latitude, longitude) {
+		if (!$.cookie('visitrTrcked')) {
+			// Save to backend
+			$.post("/visits.json", { visit: { useragent: user_agent, latitude: latitude, longitude: longitude } } );
+			// Set a cookie that expires 24h from now
+			$.cookie('visitrTrcked', 'true', { expires: 1, path: '/' });
+		}
+	}
+	
+	// Updates the page with the geolocation result
 	function update_result(latitude, longitude) {
 		$( "#the-result" ).html( 'You come from (' + latitude + ',' + longitude + ') and your browser is: ' + user_agent );
-		
-		//$.post("/visits.json", { visit: { useragent: user_agent, latitude: latitude, longitude: longitude } } );
 		
 		$( "#status").html("I can haz Maps?");
 		
@@ -44,13 +55,17 @@
 			map: map,
 			title:"Hello World!"
 		});
+		
+		save_visit(latitude, longitude);
 	}
 	
+	// Uses the geolocation API / geoPosition result to update the page
 	function use_geoloc_result(loc) {
 		$( "#status").html("Using location from GeoLocation API.");
 		update_result(loc.coords.latitude, loc.coords.longitude);
 	}
 	
+	// Uses the IP geolocation result from the backend to update the page	
 	function use_request_loc() {
 		$( "#status").html("Using server-side fallback.");
 		
@@ -60,10 +75,10 @@
 		update_result(rloc_latitude, rloc_longitude);
 	}
 	
+	// Try to get the users position
 	if (geoPosition.init()) {
 		$( "#status").html("I can haz Geo!");
 		geoPosition.getCurrentPosition(use_geoloc_result, use_request_loc);
-		//$.post("/visits.json", { visit: { useragent: user_agent, latitude: 23.5, longitude: 42.3 } } );
 	} else {
 		$( "#status").html("No GeoLocation API...");
 		use_request_loc();
