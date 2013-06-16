@@ -1,9 +1,23 @@
 class VisitsController < ApplicationController
   before_action :set_visit, only: [:show, :edit, :update, :destroy]
 
+  # Removes old visits
+  def prune
+    # TODO: Can we do this with some kind of ... WHERE clause query?
+    visits = Visit.all
+    now = Time.new
+    one_day_ago = now - (24*60*60) # TODO: Make this a config parameter
+    visits.each do |visit|
+      if visit.created_at < one_day_ago
+        visit.destroy
+      end
+    end
+  end
+
   # GET /visits
   # GET /visits.json
   def index
+    prune
     @visits = Visit.all
   end
 
@@ -24,6 +38,7 @@ class VisitsController < ApplicationController
   # POST /visits
   # POST /visits.json
   def create
+    prune
     @visit = Visit.new(visit_params)
 
     respond_to do |format|
