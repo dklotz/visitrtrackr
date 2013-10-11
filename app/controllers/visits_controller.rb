@@ -4,6 +4,9 @@ class VisitsController < ApplicationController
   # Removes old visits
   def prune
     # TODO: Can we do this with some kind of ... WHERE clause query?
+    # User.where(:age => 15).destroy_all
+    # Visit.where("created_at < ?", now)
+    # Client.where("created_at >= :start_date AND created_at <= :end_date", {:start_date => params[:start_date], :end_date => params[:end_date]})
     visits = Visit.all
     now = Time.new
     one_day_ago = now - (24*60*60) # TODO: Make this a config parameter
