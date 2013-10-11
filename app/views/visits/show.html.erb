@@ -15,5 +15,15 @@
   <%= @visit.longitude %>
 </p>
 
+<p>
+  <strong>Created at:</strong>
+  <%= @visit.created_at %>
+</p>
+
+<p>
+  <strong>Updated at:</strong>
+  <%= @visit.updated_at %>
+</p>
+
 <%= link_to 'Edit', edit_visit_path(@visit) %> |
 <%= link_to 'Back', visits_path %>

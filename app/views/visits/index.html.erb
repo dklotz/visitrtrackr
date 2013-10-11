@@ -6,6 +6,7 @@
       <th>Useragent</th>
       <th>Latitude</th>
       <th>Longitude</th>
+	  <th>Created at</th>
       <th></th>
       <th></th>
       <th></th>
@@ -18,6 +19,7 @@
         <td><%= visit.useragent %></td>
         <td><%= visit.latitude %></td>
         <td><%= visit.longitude %></td>
+		<td><%= visit.created_at %></td>
         <td><%= link_to 'Show', visit %></td>
         <td><%= link_to 'Edit', edit_visit_path(visit) %></td>
         <td><%= link_to 'Destroy', visit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
