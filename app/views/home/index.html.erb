@@ -8,6 +8,7 @@
 <div id="the-result">
 </div>
 
+<!-- google sez: <div id="map-canvas" style="width: 100%; height: 100%"></div> -->
 <p style="margin:0 auto;width:400px;height:320px" id="geo-wrapper">
 	Here be maps.
 </p>
@@ -26,7 +27,9 @@
 	// Uses the geolocation API / geoPosition result to update the page
 	function use_geoloc_result(loc) {
 		$( "#status").html("Using location from GeoLocation API.");
-		update_result(loc.coords.latitude, loc.coords.longitude, user_agent);
+		update_visits(loc.coords.latitude, loc.coords.longitude, user_agent);
+		var map = show_map(loc.coords.latitude, loc.coords.longitude);
+		show_visits(map);
 	}
 	
 	// Uses the IP geolocation result from the backend to update the page	
@@ -36,7 +39,9 @@
 		var rloc_latitude = <%= @location[:latitude] %>;
 		var rloc_longitude = <%= @location[:longitude] %>;
 		
-		update_result(rloc_latitude, rloc_longitude, user_agent);
+		update_visits(rloc_latitude, rloc_longitude, user_agent);
+		var map = show_map(rloc_latitude, rloc_longitude);
+		show_visits(map);
 	}
 	
 	// Try to get the users position

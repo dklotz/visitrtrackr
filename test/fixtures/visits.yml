@@ -9,3 +9,8 @@ two:
   useragent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) FooWebKit/539.38"
   latitude: 52.5
   longitude: 8.5
+
+three:
+  useragent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) BarWebKit/538.39"
+  latitude: 52.020417
+  longitude: 8.532222
